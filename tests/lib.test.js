@@ -62,3 +62,24 @@ describe('getProduct', () => {
         expect(result).toHaveProperty('id', 1);
     });
 })
+
+describe('registerUser', () => {
+    it('should throw an error if username is falsy', () => {
+        // undefined
+        // Null
+        // ''
+        // NaN
+        // 0
+        // false
+        const args = [null, undefined, NaN, '', 0, false];
+        args.forEach(val => {
+            expect(() => { lib.registerUser(val); }).toThrow();
+        });
+    });
+
+    it('should return a user object if a valid username is passed', () => {
+        const result = lib.registerUser('Jachrix');
+        expect(result).toMatchObject({ username: 'Jachrix' });
+        expect(result.id).toBeGreaterThan(0);
+    });
+})
