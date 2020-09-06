@@ -3,44 +3,51 @@ const mail = require('./mail');
 
 // Testing numbers 
 module.exports.absolute = function(number) {
-  if (number > 0) return number; 
-  if (number < 0) return -number; 
-  return 0; 
+    // if (number > 0) return number; 
+    // if (number < 0) return -number; 
+    // return 0; 
+
+    // Refactoring 
+
+    // if (number >= 0) return number;
+    // return -number;
+
+    return number >= 0 ? number : -number;
 }
 
 // Testing strings 
-module.exports.greet = function(name) { 
-  return 'Welcome ' + name; 
+module.exports.greet = function(name) {
+    return 'Welcome ' + name;
 }
 
 // Testing arrays 
-module.exports.getCurrencies = function() { 
-  return ['USD', 'AUD', 'EUR'];
+module.exports.getCurrencies = function() {
+    return ['USD', 'AUD', 'EUR'];
 }
 
 // Testing objects 
-module.exports.getProduct = function(productId) { 
-  return { id: productId, price: 10 };
+module.exports.getProduct = function(productId) {
+    return { id: productId, price: 10 };
 }
 
 // Testing exceptions 
-module.exports.registerUser = function(username) { 
-  if (!username) throw new Error('Username is required.');
+module.exports.registerUser = function(username) {
+    if (!username) throw new Error('Username is required.');
 
-  return { id: new Date().getTime(), username: username }
+    return { id: new Date().getTime(), username: username }
 }
 
 // Mock functions 
-module.exports.applyDiscount = function(order) { 
-  const customer = db.getCustomerSync(order.customerId);
+module.exports.applyDiscount = function(order) {
+    const customer = db.getCustomerSync(order.customerId);
 
-  if (customer.points > 10) 
-    order.totalPrice *= 0.9; 
+    if (customer.points > 10)
+        order.totalPrice *= 0.9;
 }
 
 // Mock functions 
-module.exports.notifyCustomer = function(order) { 
-  const customer = db.getCustomerSync(order.customerId);
+module.exports.notifyCustomer = function(order) {
+    const customer = db.getCustomerSync(order.customerId);
 
-  mail.send(customer.email, 'Your order was placed successfully.');
+    mail.send(customer.email, 'Your order was placed successfully.');
 }
