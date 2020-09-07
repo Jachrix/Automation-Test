@@ -101,16 +101,28 @@ describe('applyDiscount', () => {
 });
 
 describe('notifyCustomer', () => {
-    db.getCustomerSync = function(customerId) {
-        return { email: 'a' };
-    }
 
-    let mailSent = false;
-    mail.send = function(email, message) {
-        mailSent = true;
-    }
+    // const mockFunction = jest.fn();
+    // //mockFunction.mockReturnValue(1);
+    // // mockFunction.mockResolvedValue(1);
+    // mockFunction.mockRejectedValue(new Error('......'));
+    // const result = await mockFunction(); // if rejectedPromise, wrap caller fnx in a try catch block
+
+    db.getCustomerSync = jest.fn().mockReturnValue({ email: 'a' });
+    // db.getCustomerSync = function(customerId) {
+    //     return { email: 'a' };
+    // }
+    mail.send = jest.fn();
+    // let mailSent = false;
+    // mail.send = function(email, message) {
+    //     mailSent = true;
+    // }
     it('should send an email to the customer', () => {
         const result = lib.notifyCustomer({ customerId: 1 });
-        expect(mailSent).toBe(true);
+
+        //expect(mailSent).toBe(true);
+        expect(mail.send).toHaveBeenCalled();
+        //expect(mail.send.mock.calls[0][0]).toBe('a');
+        expect(mail.send.mock.calls[0][1]).toMatch(/order/);
     });
 })
